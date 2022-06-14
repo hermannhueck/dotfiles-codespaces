@@ -8,21 +8,18 @@ set -x
 pwd | tee -a $HOME/setup.log
 ls -al | tee -a $HOME/setup.log
 
-echo $HOME | tee -a $HOME/setup.log
-echo ~ | tee -a $HOME/setup.log
-sleep 10 | tee -a $HOME/setup.log
-
-# chmod +x bin/*
-# bin/packages-outdated
-# sudo apt install --yes tree wget
-# bin/scala-tools-setup
-
-set +x
-
-echo "Terminated codespace environment setup at $(date)" | tee -a $HOME/setup.log
+cp -r .??* bin ~
+cd
 
 pwd | tee -a $HOME/setup.log
 ls -al | tee -a $HOME/setup.log
 
-echo $HOME | tee -a $HOME/setup.log
-echo ~ | tee -a $HOME/setup.log
+chmod +x bin/*
+
+bin/packages-outdated && bin/packages-upgrade
+sudo apt install --yes tree wget 
+bin/scala-tools-setup 
+
+set +x
+
+echo "Terminated codespace environment setup at $(date)" | tee -a $HOME/setup.log

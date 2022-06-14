@@ -26,13 +26,12 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# >>> coursier install directory >>>
-export PATH="$PATH:/home/codespace/.local/share/coursier/bin"
-# <<< coursier install directory <<<
+export PATH="$PATH:~/.local/share/coursier/bin:~/bin"
 
 . ~/.alias
 
 echo -----------------------------------------------
 java -version
 scala -version
+scalac -version
 echo -----------------------------------------------
