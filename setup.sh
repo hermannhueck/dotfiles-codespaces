@@ -1,26 +1,14 @@
 #!/bin/bash
-#
 
-echo "Setting up the codespace environment at $(date)" | tee -a $HOME/setup.log
-
-set -x
-
-pwd | tee -a $HOME/setup.log
-ls -al | tee -a $HOME/setup.log
-
+# copy from dotfiles directory to $HOME
 cp -r .??* bin ~
 cat my-profile >> ~/.profile
 cat my-profile >> ~/.bashrc
 chmod +x ~/bin/*
 
 cd
-pwd | tee -a $HOME/setup.log
-ls -al | tee -a $HOME/setup.log
 
+# run scripts
 bin/packages-outdated && bin/packages-upgrade
 sudo apt install --yes tree wget 
 bin/scala-tools-setup 
-
-set +x
-
-echo "Terminated codespace environment setup at $(date)" | tee -a $HOME/setup.log
