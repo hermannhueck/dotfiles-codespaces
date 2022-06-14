@@ -20,3 +20,9 @@ sleep 10 | tee $HOME/setup.log
 set +x
 
 echo "Terminated codespace environment setup at $(date)" | tee $HOME/setup.log
+
+pwd | tee $HOME/setup.log
+ls -al | tee $HOME/setup.log
+
+echo $HOME | tee $HOME/setup.log
+echo ~ | tee $HOME/setup.log
