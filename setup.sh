@@ -9,12 +9,13 @@ pwd | tee -a $HOME/setup.log
 ls -al | tee -a $HOME/setup.log
 
 cp -r .??* bin ~
-cd
+cat my-profile >> ~/.profile
+cat my-profile >> ~/.bashrc
+chmod +x ~/bin/*
 
+cd
 pwd | tee -a $HOME/setup.log
 ls -al | tee -a $HOME/setup.log
-
-chmod +x bin/*
 
 bin/packages-outdated && bin/packages-upgrade
 sudo apt install --yes tree wget 
