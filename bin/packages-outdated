@@ -1,0 +1,25 @@
+#!/bin/bash
+
+function check_status {
+	status=$1
+	echo "STATUS = $status" >&2
+	if [ $status -ne 0 ]
+	then
+		echo FAILED >&2
+		exit $status
+	fi
+	echo
+}
+
+function execute {
+	echo -----------------------------------
+	command="$@"
+	echo "+++++ $command +++++" >&2
+	eval $command
+	check_status $?
+}
+
+
+execute sudo apt-get update
+execute sudo apt list --upgradable
+# execute sudo apt-get dist-upgrade --yes --dry-run --verbose-versions

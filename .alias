@@ -1,0 +1,106 @@
+
+# general aliases
+alias a=alias
+alias cl=clear
+alias h=history
+alias h0='history 0'
+alias l='ls -l'
+alias la='ls -al'
+alias d=docker
+alias dc=docker-compose
+alias cdhh="cd $hh"
+alias vp='vi ~/.profile; source ~/.profile'
+alias vz='vi ~/.zshrc; source ~/.zshrc'
+alias va='vi ~/.alias; source ~/.alias'
+alias path='echo $PATH'
+alias dpgh='cd ~/dev/projects/github-public/hermannhueck'
+alias ipp='curl https://ipecho.net/plain; echo'
+function md {
+	dir="$1" 
+	[ -d "$dir" ] && cd "$dir" || {
+		mkdir -p "$dir" && cd "$dir"
+	}
+}
+alias di='echo dotenv >>.envrc && touch .env && direnv allow'
+
+# git aliases
+
+function git_main_branch() {
+  command git rev-parse --git-dir &>/dev/null || return
+  local ref
+  for ref in refs/{heads,remotes/{origin,upstream}}/{main,trunk}; do
+    if command git show-ref -q --verify $ref; then
+      echo ${ref:t}
+      return
+    fi
+  done
+  echo master
+}
+
+alias ga='git config --global --list | grep alias | sort'
+alias g=git
+alias gst='git status'
+alias gsh='git show'
+alias gap='git add .'
+alias gcm='git commit -m'
+alias gcam='git add . && git commit -m'
+alias gph='git push'
+alias gphuom='git push --set-upstream origin $(git_main_branch)'
+alias gpl='git pull'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias grss='git reset --soft'
+alias grsm='git reset --mixed'
+alias grsh='git reset --hard'
+alias gm='git merge'
+alias gma='git merge --abort'
+alias grb='git rebase'
+alias grbi='git rebase --interactive'
+alias grba='git rebase --abort'
+alias grbc='git rebase --continue'
+alias gcp='git cherry-pick'
+alias gl='git log'
+alias glg='git log --oneline --graph'
+alias glg10='git log --oneline --graph --max-count=10'
+alias glg30='git log --oneline --graph --max-count=30'
+alias gla='git log --oneline --graph --all'
+alias glr='git log --oneline --reverse'
+alias glr10='git log --oneline --reverse --max-count=10'
+alias glr30='git log --oneline --reverse --max-count=30'
+alias grl='git reflog'
+alias ghi='git hist'
+alias gcnt='git shortlog -sn'
+alias gcntnm='git shortlog -sn --no-merges'
+alias gre='git remote'
+alias grev='git remote --verbose'
+alias grea='git remote add'
+alias greao='git remote add origin'
+alias gwip='git add -A; git rm $(git ls-files --deleted) 2>/dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"'
+alias gunwip='git log -n 1 | grep -q -c "\_\_wip\_\_" && git reset HEAD~1'
+alias branches="git for-each-ref --sort='-authordate:iso8601' --format=' %(color:green)%(authordate:iso8601)%09%(color:white)%(refname:short)' refs/heads"
+
+# bloop aliases
+alias b=bloop
+alias bc='bloop compile'
+alias bt='bloop test'
+alias br='bloop run'
+alias brm='bloop run --main'
+
+### Boot Chime on/off
+# sudo nvram SystemAudioVolume=%80
+# sudo nvram -d SystemAudioVolume
+
+# Haskell Stack aliases
+# eval "$(stack --bash-completion-script stack)"
+# alias ghci="stack exec -- ghci"
+# alias gi="stack exec -- ghci"
+# alias sg="stack ghci"
+# alias sb="stack build"
+# alias st="stack test"
+# alias runhaskell="stack runhaskell"
+# alias ghc="stack exec -- ghc"
+# alias s=stack
+
+# shutdown/reboot
+alias ssdn='sudo shutdown now'
+alias srbn='sudo reboot now'

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+function check_status {
+	status=$1
+	echo "STATUS = $status" >&2
+	if [ $status -ne 0 ]
+	then
+		echo FAILED >&2
+		exit $status
+	fi
+	echo
+}
+
+function execute {
+	echo -----------------------------------
+	command="$@"
+	echo "+++++ $command +++++" >&2
+	eval $command
+	check_status $?
+}
+
+
+# execute sudo apt-get update
+# execute sudo apt-get upgrade --yes
+execute sudo apt-get dist-upgrade --yes
+execute sudo apt-get autoclean --yes
+execute sudo apt-get autoremove --yes
