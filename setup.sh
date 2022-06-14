@@ -24,7 +24,8 @@ bin/packages-outdated && bin/packages-upgrade
 echo "<<< $(date "+%Y-%m-%d %H:%M:%S"):  Updating Ubuntu DONE." >> $logfile
 
 echo ">>> $(date "+%Y-%m-%d %H:%M:%S"):  Installing additional packages ..." >> $logfile
-sudo apt install --yes tree direnv fzf bat
+sudo apt install --yes tree direnv fzf bat &&
+  cd /usr/bin && sudo ln -s batcat bat && cd -
 echo "<<< $(date "+%Y-%m-%d %H:%M:%S"):  Installing DONE." >> $logfile
 
 echo "=== $(date "+%Y-%m-%d %H:%M:%S"):  Codespace Environment Setup DONE." >> $logfile
