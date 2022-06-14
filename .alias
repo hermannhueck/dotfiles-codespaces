@@ -15,6 +15,7 @@ alias va='vi ~/.alias; source ~/.alias'
 alias path='echo $PATH'
 alias dpgh='cd ~/dev/projects/github-public/hermannhueck'
 alias ipp='curl https://ipecho.net/plain; echo'
+alias tlsl='tail -f $HOME/setup_*.log'
 function md {
 	dir="$1" 
 	[ -d "$dir" ] && cd "$dir" || {
