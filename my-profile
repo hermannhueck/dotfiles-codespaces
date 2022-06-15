@@ -1,6 +1,6 @@
 
-export JAVA_HOME=$HOME/.java/current # replaces /opt/java/lts
-export PATH="$PATH:$HOME/.local/share/coursier/bin:$HOME/.local/bin:$HOME/bin"
+export JAVA_HOME=$HOME/.java/current     # replaces /opt/java/lts
+export PATH="$JAVA_HOME/bin:$PATH:$HOME/.local/share/coursier/bin:$HOME/.local/bin:$HOME/bin"
 
 . ~/.alias
 
