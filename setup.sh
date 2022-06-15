@@ -27,8 +27,8 @@ echo
 echo "------------------------------------------------------------"
 log ">>>" "Copying from dotfiles directory to $HOME ..."
 cp -r .??* bin ~ &&
-cat my-profile >> ~/.profile &&
-cat my-profile >> ~/.bashrc &&
+echo ". ~/.myProfile" >> ~/.profile &&
+echo ". ~/.myProfile" >> ~/.bashrc &&
 chmod +x ~/bin/*
 done_or_failed $? "Copying DONE."
 echo "------------------------------------------------------------"
