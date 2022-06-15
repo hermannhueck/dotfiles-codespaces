@@ -21,6 +21,7 @@ function execute {
 
 
 execute sudo apt-get update
+execute sudo apt list --upgradable
 execute sudo apt-get upgrade --yes
 execute sudo apt-get dist-upgrade --yes
 execute sudo apt-get autoclean --yes

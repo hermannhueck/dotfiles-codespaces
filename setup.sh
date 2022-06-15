@@ -3,29 +3,47 @@
 
 logfile="$HOME/setup_$(date "+%Y-%m-%d_%H:%M:%S").log"
 
-echo "=== $(date "+%Y-%m-%d %H:%M:%S"):  Setting up the codespace environment ..." >> $logfile
+function log {
+  prefix="$1"
+  message="$2"
+  echo "$prefix $(date "+%Y-%m-%d %H:%M:%S"):  $message" ||
+  echo "$prefix $(date "+%Y-%m-%d %H:%M:%S"):  $message"
+}
 
-echo ">>> $(date "+%Y-%m-%d %H:%M:%S"):  Copying from dotfiles directory to $HOME ..." >> $logfile
+function done_or_failed {
+  status=$1
+  message="$2"
+  [ $status -eq 0 ] &&
+  log "<<<" "$message DONE." ||
+  log "<<<" "$message FAILED."
+}
+
+log "===" "Setting up the codespace environment ..." >> $logfile
+
+log ">>>" "Copying from dotfiles directory to $HOME ..." >> $logfile
 cp -r .??* bin ~
 cat my-profile >> ~/.profile
 cat my-profile >> ~/.bashrc
 chmod +x ~/bin/*
-echo "<<< $(date "+%Y-%m-%d %H:%M:%S"):  Copying DONE." >> $logfile
+log "<<<" "Copying DONE." >> $logfile
 
 cd
 
 # run scripts
-echo ">>> $(date "+%Y-%m-%d %H:%M:%S"):  Setting up Scala Tools ..." >> $logfile
-bin/scala-tools-setup 
-echo "<<< $(date "+%Y-%m-%d %H:%M:%S"):  Scala Tools Setup DONE." >> $logfile
+log ">>>" "Setting up Scala Tools ..." >> $logfile
+bin/scala-tools-setup
+done_or_failed $? "Scala Tools Setup" >> $logfile
 
-echo ">>> $(date "+%Y-%m-%d %H:%M:%S"):  Updating Ubuntu packages ..." >> $logfile
-bin/packages-outdated && bin/packages-upgrade
-echo "<<< $(date "+%Y-%m-%d %H:%M:%S"):  Updating Ubuntu DONE." >> $logfile
-
-echo ">>> $(date "+%Y-%m-%d %H:%M:%S"):  Installing additional packages ..." >> $logfile
-sudo apt install --yes tree direnv fzf bat &&
+log ">>>" "Installing additional tools ..." >> $logfile
+sudo apt-get update &&
+  sudo apt install --yes tree direnv fzf bat &&
   cd /usr/bin && sudo ln -s batcat bat && cd -
-echo "<<< $(date "+%Y-%m-%d %H:%M:%S"):  Installing DONE." >> $logfile
+done_or_failed $? "Installation of tools" >> $logfile
 
-echo "=== $(date "+%Y-%m-%d %H:%M:%S"):  Codespace Environment Setup DONE." >> $logfile
+log ">>>" "Updating Ubuntu packages ..." >> $logfile
+sudo apt-get upgrade --yes &&
+  sudo apt-get autoclean --yes &&
+  sudo apt-get autoremove --yes
+done_or_failed $? "Updating Ubuntu" >> $logfile
+
+log "===" "Codespace Environment Setup TERMINATED." >> $logfile
