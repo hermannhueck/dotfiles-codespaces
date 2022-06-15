@@ -18,32 +18,34 @@ function done_or_failed {
   log "<<<" "$message FAILED."
 }
 
-log "===" "Setting up the codespace environment ..." >> $logfile
+exec >> $logfile 2>&1
 
-log ">>>" "Copying from dotfiles directory to $HOME ..." >> $logfile
+log "===" "Setting up the codespace environment ..."
+
+log ">>>" "Copying from dotfiles directory to $HOME ..."
 cp -r .??* bin ~
 cat my-profile >> ~/.profile
 cat my-profile >> ~/.bashrc
 chmod +x ~/bin/*
-log "<<<" "Copying DONE." >> $logfile
+log "<<<" "Copying DONE."
 
 cd
 
 # run scripts
-log ">>>" "Setting up Scala Tools ..." >> $logfile
+log ">>>" "Setting up Scala Tools ..."
 bin/scala-tools-setup
-done_or_failed $? "Scala Tools Setup" >> $logfile
+done_or_failed $? "Scala Tools Setup"
 
-log ">>>" "Installing additional tools ..." >> $logfile
+log ">>>" "Installing additional tools ..."
 sudo apt-get update &&
   sudo apt install --yes tree direnv fzf bat &&
   cd /usr/bin && sudo ln -s batcat bat && cd -
-done_or_failed $? "Installation of tools" >> $logfile
+done_or_failed $? "Installation of tools"
 
-log ">>>" "Updating Ubuntu packages ..." >> $logfile
+log ">>>" "Updating Ubuntu packages ..."
 sudo apt-get upgrade --yes &&
   sudo apt-get autoclean --yes &&
   sudo apt-get autoremove --yes
-done_or_failed $? "Updating Ubuntu" >> $logfile
+done_or_failed $? "Updating Ubuntu"
 
-log "===" "Codespace Environment Setup TERMINATED." >> $logfile
+log "===" "Codespace Environment Setup TERMINATED."
