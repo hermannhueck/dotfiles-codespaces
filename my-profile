@@ -4,7 +4,5 @@ export PATH="$PATH:$HOME/.local/share/coursier/bin:$HOME/.local/bin:$HOME/bin"
 . ~/.alias
 
 echo -----------------------------------------------
-java -version
-scala -version
-scalac -version
+jenv
 echo -----------------------------------------------
